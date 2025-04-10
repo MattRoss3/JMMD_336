@@ -12,9 +12,9 @@ app.use(express.urlencoded({extended:true}));
 //setting up database connection pool
 const pool = mysql.createPool({
   host: "mross2001.com",
-user: "mrosscom_webuser",
-password: "CSUMB-cst336",
-database: "mrosscom_quotes",
+user: "mrosscom_jmmd",
+password: "csumb_336",
+database: "mrosscom_jmmd",
 connectionLimit: 10,
 waitForConnections: true
 });
@@ -22,14 +22,59 @@ const conn = await pool.getConnection();
 
 //routes
 app.get('/', (req, res) => {
-   res.send('Hello Express app!')
+   res.render('index')
+});
+app.get('/login', (req, res) => {
+   res.render('login')
+});
+app.post('/login',async(req,res)=>{
+  let username=req.body.username;
+  let password=req.body.password;
+  let sql=`select *
+          from users
+          where username=?`;
+  let params=[username];
+  const [rows]= await conn.query(sql, params);
+  if(rows.length==0){
+    return res.render("login",{"message": "User does not exsist"});
+  }
+  if(password!=rows[0].password){
+    return res.render("login",{"message": "Incorrect Password Please try again"});
+  }
+  res.render("login",{"message": "Success"});
+} )
+app.get('/signup', (req, res) => {
+   res.render('signup')
+});
+app.post('/signup', async(req,res)=>{
+  let username=req.body.username;
+  let firstname=req.body.fname;
+  let lastname=req.body.lname;
+  let password=req.body.password;
+  let repassword=req.body.repassword;
+  if ([username,firstname,lastname,password,repassword].includes("")){
+    return res.render("signup", {"message": "Please fill in all values!"});
+  }
+  if (password!=repassword){
+    return res.render("signup", {"message": "Passwords do not match!"});
+  }
+  let sql=`Select *
+            from users
+            where username=?`;
+  let params=[username];
+  const [rows] = await conn.query(sql, params);
+  if(rows.length>0){
+    return res.render("signup", {"message": "Username taken!"});
+  }
+  sql=`Insert into users
+            (firstName,lastName,username,password)
+            values(?,?,?,?)`;
+  params=[firstname,lastname,username,password];
+  const [rows2] = await conn.query(sql, params);
+  res.render("login",
+             {"message": "User added!"});
 });
 
-app.get("/dbTest", async(req, res) => {
-    let sql = "SELECT CURDATE()";
-    const [rows] = await conn.query(sql);
-    res.send(rows);
-});//dbTest
 
 app.listen(3000, ()=>{
     console.log("Express server running")
