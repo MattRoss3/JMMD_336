@@ -1,6 +1,6 @@
 import express from 'express';
 import mysql from 'mysql2/promise';
-
+import bcrypt from 'bcrypt';
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -38,7 +38,7 @@ app.post('/login',async(req,res)=>{
   if(rows.length==0){
     return res.render("login",{"message": "User does not exsist"});
   }
-  if(password!=rows[0].password){
+  if(!(await bcrypt.compare(password,rows[0].password))){
     return res.render("login",{"message": "Incorrect Password Please try again"});
   }
   res.render("login",{"message": "Success"});
@@ -66,12 +66,14 @@ app.post('/signup', async(req,res)=>{
   if(rows.length>0){
     return res.render("signup", {"message": "Username taken!"});
   }
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
   sql=`Insert into users
             (firstName,lastName,username,password)
             values(?,?,?,?)`;
-  params=[firstname,lastname,username,password];
+  params=[firstname,lastname,username,hashedPassword];
   const [rows2] = await conn.query(sql, params);
-  res.render("login",
+  res.render("signup",
              {"message": "User added!"});
 });
 
