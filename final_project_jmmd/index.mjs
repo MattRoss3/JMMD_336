@@ -1,6 +1,7 @@
 import express from 'express';
 import mysql from 'mysql2/promise';
 import bcrypt from 'bcrypt';
+import session from 'express-session';
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -8,6 +9,13 @@ app.use(express.static('public'));
 
 //for Express to get values using POST method
 app.use(express.urlencoded({extended:true}));
+
+app.set('trust proxy', 1);
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true
+}))
 
 //setting up database connection pool
 const pool = mysql.createPool({
@@ -21,13 +29,14 @@ waitForConnections: true
 const conn = await pool.getConnection();
 
 //routes
-app.get('/', (req, res) => {
-   res.render('index')
+app.get('/', authenticated,(req, res) => {
+   res.render('index');
 });
 app.get('/login', (req, res) => {
    res.render('login')
 });
 app.post('/login',async(req,res)=>{
+
   let username=req.body.username;
   let password=req.body.password;
   let sql=`select *
@@ -41,6 +50,7 @@ app.post('/login',async(req,res)=>{
   if(!(await bcrypt.compare(password,rows[0].password))){
     return res.render("login",{"message": "Incorrect Password Please try again"});
   }
+  req.session.authenticated=true;
   res.render("login",{"message": "Success"});
 } )
 app.get('/signup', (req, res) => {
@@ -81,3 +91,11 @@ app.post('/signup', async(req,res)=>{
 app.listen(3000, ()=>{
     console.log("Express server running")
 })
+function authenticated(req,res,next){
+  if(!(req.session.authenticated)){
+    return res.redirect("/login")
+  }else{
+    next();
+  }
+
+}
