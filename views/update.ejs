@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Language App</title>
+</head>
+<body>
+  <form action="/update" method="POST">
+    First Name:
+    <input type="text" name="fname" value=<%=info[1]%>><br>
+    Last Name:
+    <input type="text" name="lname" value=<%=info[2]%>><br>
+    Username:
+    <input type="text" name="username" value=<%=info[0]%>><br>
+    <input type="submit" value="submit">
+  </form>
+  <form action="/updatePassword" method="POST">
+    Password:
+    <input type="password" name="password" value=""><br>
+    New Password:
+    <input type="password" name="newpassword" value=""><br>
+    Verify New Password:
+    <input type="password" name="repassword" value=""><br>
+    <input type="submit" value="submit">
+  </form>
+  <% if (typeof message!= "undefined"){%>
+      <h3><%=message%></h3>
+    <%}%>
+</body>
