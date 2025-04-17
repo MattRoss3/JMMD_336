@@ -86,6 +86,22 @@ app.post('/signup', async(req,res)=>{
   res.render("signup",
              {"message": "User added!"});
 });
+app.get('/translator', authenticated,(req, res) => {
+  res.render("translator");
+});
+app.post('/translator', async(req,res)=>{
+  let word= req.body.word;
+  if(word!=""){
+  let api='d8631244-7fed-4bf0-8546-2ba3ef5a1d97';
+  let url= `https://www.dictionaryapi.com/api/v3/references/spanish/json/${word}?key=d8631244-7fed-4bf0-8546-2ba3ef5a1d97`;
+  let response=await fetch(url);
+  let data= await response.json();
+  let translation=data[0].shortdef;
+  console.log(translation);
+  return res.render("translator",{"message":translation});
+}
+return res.render("translator")
+});
 
 
 app.listen(3000, ()=>{
