@@ -1,0 +1,15 @@
+<%- include('partials/header', { title:'Dashboard' }) %>
+<h1>Welcome, <%= session.firstName %>!</h1>
+<p>You have <strong><%= total %></strong> assigned challenge(s).</p>
+<p><a href="/challenges">➕ Add a New Challenge</a></p>
+<h2>Your Challenges</h2>
+<ul>
+  <% if (!assignments.length) { %>
+    <li><em>No challenges yet.</em></li>
+  <% } else { %>
+    <% assignments.forEach(a => { %>
+      <li><strong><%= a.title %></strong> — status: <%= a.status %></li>
+    <% }) %>
+  <% } %>
+</ul>
+<%- include('partials/footer') %>

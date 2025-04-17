@@ -1,0 +1,13 @@
+<%- include('partials/header', { title:'Sign Up' }) %>
+<h1>Sign Up</h1>
+<form method="POST" action="/signup">
+  <label>First Name: <input name="fname" required></label><br>
+  <label>Last Name:  <input name="lname" required></label><br>
+  <label>Username:   <input name="username" required></label><br>
+  <label>Password:   <input type="password" name="password" required></label><br>
+  <label>Confirm:    <input type="password" name="repassword" required></label><br>
+  <button type="submit">Register</button>
+</form>
+<% if (message) { %><p style="color:red;"><%= message %></p><% } %>
+<p>Or <a href="/login">Log In</a></p>
+<%- include('partials/footer') %>

@@ -1,0 +1,11 @@
+<%- include('partials/header', { title:'Translator' }) %>
+<h1>Translator</h1>
+<form method="POST" action="/translator">
+  Enter your Spanish or English word here:<br>
+  <input type="text" name="word" value=""><br>
+  <button type="submit">Submit</button>
+</form>
+<% if (typeof message !== 'undefined') { %>
+  <h3><%= message %></h3>
+<% } %>
+<%- include('partials/footer') %>

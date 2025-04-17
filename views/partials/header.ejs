@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= title || 'Language App' %></title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <% if (session?.authenticated) { %>
+        <a href="/dashboard">Dashboard</a> |
+        <a href="/translator">Translator</a> |
+        <a href="/challenges">Challenges</a> |
+        <a href="/update">Profile</a> |
+        <a href="/logout">Log Out</a>
+      <% } else { %>
+        <a href="/login">Log In</a> |
+        <a href="/signup">Sign Up</a>
+      <% } %>
+    </nav>
+  </header>
+  <main>

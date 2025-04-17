@@ -1,0 +1,25 @@
+<%- include('partials/header', { title:'Update Profile' }) %>
+<h1>Update Profile</h1>
+<form action="/update" method="POST">
+  First Name:
+  <input type="text" name="fname" value="<%= info[1] %>"><br>
+  Last Name:
+  <input type="text" name="lname" value="<%= info[2] %>"><br>
+  Username:
+  <input type="text" name="username" value="<%= info[0] %>"><br>
+  <button type="submit">Update Info</button>
+</form>
+<hr>
+<form action="/updatepassword" method="POST">
+  Current Password:
+  <input type="password" name="password"><br>
+  New Password:
+  <input type="password" name="newpassword"><br>
+  Verify New Password:
+  <input type="password" name="repassword"><br>
+  <button type="submit">Change Password</button>
+</form>
+<% if (typeof message !== 'undefined') { %>
+  <h3><%= message %></h3>
+<% } %>
+<%- include('partials/footer') %>
