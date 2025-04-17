@@ -6,17 +6,17 @@
 </head>
 
 <body>
-    <h2><%=challengeName%></h2>
+    <h2><%=selectedChallenge[0].challengeName%></h2>
     <br>
-    <%=challengeDescription%>
+    <%=selectedChallenge[0].challengeDescription%>
     <br>
 
     Choose the format for your challenge:
     <br>
 
     <div class="challengeTypeButtons">
-        <a class="multipleChoiceButton" href="/multipleC?quoteId=<%=quotes[i].quoteId%>">MULTIPLE CHOICES CHALLENGE</a>
-        <a class="writeInButton" href="/quote/delete?quoteId=<%=quotes[i].quoteId%>">WRITE-IN CHALLENGE</a><br>
+        <a class="multipleChoiceButton" href="/challenge_screen_multiplechoice?challengeId=<%=selectedChallenge[0].challengeId%>">MULTIPLE CHOICES CHALLENGE</a>
+        <a class="writeInButton" href="/challenge_screen_writein?challengeId=<%=selectedChallenge[0].challengeId%>">WRITE-IN CHALLENGE</a><br>
     </div>
 
 

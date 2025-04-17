@@ -6,19 +6,16 @@
 </head>
 
 <body>
-    <h2><%=challengeName%></h2>
+    <h2><%=selectedChallenge[0].challengeName%></h2>
     <br>
-    <%=challengeDescription%>
-    <br>
-
-    <%=challengeQuestion%>
+    <%=selectedChallenge[0].challengeDescription%>
     <br>
 
     <% for (i=0; i < questionList.length; i++) { %>
         <div class="questionList">
             <%=questionList[i].questionText%><br>
 
-            <input type="text" name="question<%i%>"><br>
+            <input type="text" name="question"><br>
 
 
             <a class="selectChallenge" href="/challenge_type_prompt?challengeId=<%=questionList[i].challengeId%>">Submit</a>
