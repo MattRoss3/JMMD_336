@@ -35,6 +35,7 @@ app.get('/', authenticated,(req, res) => {
 app.get('/login', (req, res) => {
    res.render('login')
 });
+
 app.post('/login',async(req,res)=>{
 
   let username=req.body.username;
@@ -51,6 +52,8 @@ app.post('/login',async(req,res)=>{
     return res.render("login",{"message": "Incorrect Password Please try again"});
   }
   req.session.authenticated=true;
+  req.session.userId = rows[0].userId;
+  req.session.info= [rows[0].username,rows[0].firstName,rows[0].lastName];
   res.render("login",{"message": "Success"});
 } )
 app.get('/signup', (req, res) => {
@@ -100,18 +103,59 @@ app.post('/translator', async(req,res)=>{
   console.log(translation);
   return res.render("translator",{"message":translation});
 }
-return res.render("translator")
 });
+app.get("/update", authenticated,(req, res) => {
+  res.render("update", {"info":req.session.info});
+});
+app.post('/update', async(req,res)=>{
+  let username=req.body.username;
+  let firstname=req.body.fname;
+  let lastname=req.body.lname;
+  let values=[username,firstname,lastname]
+  for (let i=0;i<values.length;i++){
+    if (values[i]==""){
+      values[i]=req.session.info[i];
+    }
+  }
+  let sql=`Update users
+            Set username=?,
+            firstName=?,
+            lastName=?
+            where userId=${req.session.userId}`;
+  const [rows] = await conn.query(sql, values);
+  res.render("update",
+             {"message": "User Updated!"});
+});
+app.post('/updatepassword', async(req,res)=>{
+  let password=req.body.password;
+  let newpassword=req.body.newpassword;
+  let repassword=req.body.repassword;
+  if(newpassword!=repassword){
+    return res.render('update',{"message":"Passwords do not match"});
+  }
+  let sql=`select *
+          from users
+          where userId=${req.session.userId}`;
+  const [rows]= await conn.query(sql);
+  if(!(await bcrypt.compare(password,rows[0].password))){
+    return res.render("login",{"message": "Incorrect Password Please try again"});
+  }
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(newpassword, salt);
+  sql=`Update users
+            Set password=?
+            where userId=${req.session.userId}`;
+  const [rows2]=await conn.query(sql,hashedPassword);
+  res.render("update",{"message": "User Updated!","info":req.session.info})
 
-
+});
 app.listen(3000, ()=>{
     console.log("Express server running")
-})
+});
 function authenticated(req,res,next){
   if(!(req.session.authenticated)){
     return res.redirect("/login")
   }else{
     next();
   }
-
-}
+};
