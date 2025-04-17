@@ -11,6 +11,22 @@
     <%=selectedChallenge[0].challengeDescription%>
     <br>
 
+    <form action="/checkAnswer" method="POST">
+        <% for (i=0; i < questionList.length; i++) { %>
+        <div class="questionList">
+            <%=questionList[i].questionText%><br>
+
+            <input type="text" name="question"><br>
+
+
+            <input type="submit" value="submit">
+        </div>
+
+        <% } %>
+    </form>
+
+
+
     <% for (i=0; i < questionList.length; i++) { %>
         <div class="questionList">
             <%=questionList[i].questionText%><br>
@@ -18,7 +34,7 @@
             <input type="text" name="question"><br>
 
 
-            <a class="selectChallenge" href="/challenge_type_prompt?challengeId=<%=questionList[i].challengeId%>">Submit</a>
+            <a class="submitAnswer" href="/challenge_screen_writein?challengeId=<%=questionList[i].challengeId%>">Submit</a>
 
         </div>
 
