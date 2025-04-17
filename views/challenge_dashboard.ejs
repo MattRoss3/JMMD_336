@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Language App</title>
+</head>
+
+<body>
+    <h2>Dashboard</h2>
+    <br>
+
+
+    Welcome <%=username%>
+    <br>
+
+    My Overall Progress
+<!--    progress bar-->
+    <br>
+
+    <a href="/add_challenge">ADD A CHALLENGE</a>
+    <br>
+
+    My Challenges
+    <br>
+
+    <% for (i=0; i < assignedChallenges.length; i++) { %>
+        <div class="assignedChallenges">
+            <%=assignedChallenges[i].name%><br>
+            <%=assignedChallenges[i].description%><br>
+
+            <a class="selectChallenge" href="/challenge_type_prompt?challengeId=<%=assignedChallenges[i].challengeId%>">SELECT</a>
+
+        </div>
+
+    <% } %>
+
+<!--    <form action="/challenge_dashboard" method="GET">-->
+
+<!--        <input type="submit" value="Submit">-->
+<!--    </form>-->
+
+    <a href="/logout">Logout</a>
+    <% if (typeof message!= "undefined"){%>
+        <h3><%=message%></h3>
+    <%}%>
+</body>

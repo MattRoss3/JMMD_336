@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Language App</title>
+</head>
+
+<body>
+    <h2><%=challengeName%></h2>
+    <br>
+    <%=challengeDescription%>
+    <br>
+
+    Choose the format for your challenge:
+    <br>
+
+    <div class="challengeTypeButtons">
+        <a class="multipleChoiceButton" href="/multipleC?quoteId=<%=quotes[i].quoteId%>">MULTIPLE CHOICES CHALLENGE</a>
+        <a class="writeInButton" href="/quote/delete?quoteId=<%=quotes[i].quoteId%>">WRITE-IN CHALLENGE</a><br>
+    </div>
+
+
+
+    <a href="/challenge_dashboard">Back to Dashboard</a>
+
+    <% if (typeof message != "undefined"){%>
+        <h3><%=message%></h3>
+    <%}%>
+</body>

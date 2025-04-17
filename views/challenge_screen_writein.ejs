@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Language App</title>
+</head>
+
+<body>
+    <h2><%=challengeName%></h2>
+    <br>
+    <%=challengeDescription%>
+    <br>
+
+    <%=challengeQuestion%>
+    <br>
+
+    <% for (i=0; i < questionList.length; i++) { %>
+        <div class="questionList">
+            <%=questionList[i].questionText%><br>
+
+            <input type="text" name="question<%i%>"><br>
+
+
+            <a class="selectChallenge" href="/challenge_type_prompt?challengeId=<%=questionList[i].challengeId%>">Submit</a>
+
+        </div>
+
+    <% } %>
+
+
+    <a href="/challenge_dashboard">Back to Dashboard</a>
+
+    <% if (typeof message != "undefined"){%>
+    <h3><%=message%></h3>
+    <%}%>
+</body>
