@@ -1,10 +1,31 @@
 <%- include('partials/header', { title:'Login' }) %>
-<h1>Login</h1>
-<form method="POST" action="/login">
-  <label>Username: <input name="username" required></label><br>
-  <label>Password: <input type="password" name="password" required></label><br>
-  <button type="submit">Log In</button>
-</form>
-<% if (message) { %><p style="color:red;"><%= message %></p><% } %>
-<p>Or <a href="/signup">Sign Up</a></p>
-<%- include('partials/footer') %>
+  <div class="login-container">
+    <div class="branding">
+      <h2>🌍 Language Learning Application 🌍</h2>
+      <p>Learn languages. Level up.</p>
+    </div>
+    <h1>Login</h1>
+    <form method="POST" action="/login">
+      <label>Username: <input name="username" required></label><br>
+      <label>Password: <input type="password" name="password" required></label><br>
+      <button type="submit">Log In</button>
+    </form>
+    <% if (message) { %>
+      <p style="color:red;">
+        <%= message %>
+      </p>
+      <% } %>
+        <p>Or <a href="/signup">Sign Up</a></p>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+        <script>
+          anime({
+            targets: 'form',
+            scale: [0.8, 1],
+            opacity: [0, 1],
+            easing: 'spring(1, 80, 10, 0)',
+            duration: 1200,
+            delay: 100
+          });
+        </script>
+  </div>
+  <%- include('partials/footer') %>
