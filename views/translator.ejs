@@ -1,11 +1,27 @@
-<%- include('partials/header', { title:'Translator' }) %>
-<h1>Translator</h1>
-<form method="POST" action="/translator">
-  Enter your Spanish or English word here:<br>
-  <input type="text" name="word" value=""><br>
-  <button type="submit">Submit</button>
-</form>
-<% if (typeof message !== 'undefined') { %>
-  <h3><%= message %></h3>
-<% } %>
-<%- include('partials/footer') %>
+<%- include('partials/header', { title: 'Translator' }) %>
+
+  <div class="translator-container">
+    <div class="branding">
+      <h2>🌍 Translator 🌍</h2>
+      <p>Quick Translation </p>
+    </div>
+
+    <form method="POST" action="/translator">
+      <label for="word">Enter a word to translate:</label><br>
+      <input type="text" id="word" name="word" value=""><br>
+      <button type="submit">Translate</button>
+    </form>
+
+    <% let translated=Array.isArray(message) ? message.join(', ') : message; %>
+
+  <% if (typeof message !== ' undefined') { %>
+      <div class="translation-result">
+        <h3>Result:</h3>
+        <p>
+          <%= translated %>
+        </p>
+      </div>
+      <% } %>
+  </div>
+
+  <%- include('partials/footer') %>

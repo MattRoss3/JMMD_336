@@ -1,59 +1,64 @@
 <%- include('partials/header', { title: 'Create Challenge' }) %>
 
-<h1>Create a New Challenge</h1>
+  <div class="challenge-container">
+    <div class="branding">
+      <h2>🧠 Create a Language Challenge!</h2>
+      <p>Pick your language, level, and challenge style!</p>
+    </div>
 
-<form method="POST" action="/challenges/generate">
-  <label>
-    Language:
-    <select name="language" required>
-      <option value="">-- Select Language --</option>
-      <option value="English">English</option>
-      <option value="Spanish">Spanish</option>
-      <option value="French">French</option>
-      <option value="German">German</option>
-      <option value="Chinese">Chinese</option>
-    </select>
-  </label>
-  <br>
+    <form method="POST" action="/challenges/generate">
+      <label>
+        Language:
+        <select name="language" required>
+          <option value="">-- Select Language --</option>
+          <option value="English">English</option>
+          <option value="Spanish">Spanish</option>
+          <option value="French">French</option>
+          <option value="German">German</option>
+          <option value="Chinese">Chinese</option>
+        </select>
+      </label>
 
-  <label>
-    Level:
-    <select name="level" required>
-      <option value="">-- Select Level --</option>
-      <option value="Beginner">Beginner</option>
-      <option value="Intermediate">Intermediate</option>
-      <option value="Advanced">Advanced</option>
-    </select>
-  </label>
-  <br>
+      <label>
+        Level:
+        <select name="level" required>
+          <option value="">-- Select Level --</option>
+          <option value="Beginner">Beginner</option>
+          <option value="Intermediate">Intermediate</option>
+          <option value="Advanced">Advanced</option>
+        </select>
+      </label>
 
-  <label>
-    # Questions:
-    <select name="numQuestions" required>
-      <% for (let i = 1; i <= 4; i++) { %>
-        <option value="<%= i %>"><%= i %></option>
+      <label>
+        # Questions:
+        <select name="numQuestions" required>
+          <% for (let i=1; i <=4; i++) { %>
+            <option value="<%= i %>">
+              <%= i %>
+            </option>
+            <% } %>
+        </select>
+      </label>
+
+      <label>
+        Display Mode:
+        <select name="displayType" required>
+          <option value="choice">Multiple Choice</option>
+          <option value="write_in">Write‑In</option>
+          <option value="prompt">Free‑Form Prompt</option>
+        </select>
+      </label>
+
+      <button type="submit">Generate & Assign</button>
+    </form>
+
+    <% if (message) { %>
+      <p class="form-message">
+        <%= message %>
+      </p>
       <% } %>
-    </select>
-  </label>
-  <br>
 
-  <label>
-    Display Mode:
-    <select name="displayType" required>
-      <option value="choice">Multiple Choice</option>
-      <option value="write_in">Write‑In</option>
-      <option value="prompt">Free‑Form Prompt</option>
-    </select>
-  </label>
-  <br>
+        <p><a href="/dashboard">← Back to Dashboard</a></p>
+  </div>
 
-  <button type="submit">Generate & Assign</button>
-</form>
-
-<% if (message) { %>
-  <p style="color:red;"><%= message %></p>
-<% } %>
-
-<p><a href="/dashboard">← Back to Dashboard</a></p>
-
-<%- include('partials/footer') %>
+  <%- include('partials/footer') %>

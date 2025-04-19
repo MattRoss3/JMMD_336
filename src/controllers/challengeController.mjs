@@ -1,5 +1,5 @@
 import { createAndAssign } from '../services/challengeService.mjs';
-import { pool }            from '../../config/db.mjs';  // for dashboard
+import { pool } from '../../config/db.mjs';  // for dashboard
 
 export function getCreateForm(req, res) {
   res.render('createChallenge', { message: null });
@@ -7,7 +7,7 @@ export function getCreateForm(req, res) {
 
 export async function postGenerate(req, res, next) {
   try {
-    const userId        = req.session.userId;
+    const userId = req.session.userId;
     const { language, level, numQuestions, displayType } = req.body;
 
     if (!language || !level || !numQuestions || !displayType) {
@@ -50,6 +50,8 @@ export async function getDashboard(req, res, next) {
        WHERE uc.userId = ?`,
       [userId]
     );
+
+
 
     res.render('dashboard', { total, assignments });
   } catch (err) {

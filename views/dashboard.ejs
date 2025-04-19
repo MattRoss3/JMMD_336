@@ -1,15 +1,37 @@
 <%- include('partials/header', { title:'Dashboard' }) %>
-<h1>Welcome, <%= session.firstName %>!</h1>
-<p>You have <strong><%= total %></strong> assigned challenge(s).</p>
-<p><a href="/challenges">➕ Add a New Challenge</a></p>
-<h2>Your Challenges</h2>
-<ul>
-  <% if (!assignments.length) { %>
-    <li><em>No challenges yet.</em></li>
-  <% } else { %>
-    <% assignments.forEach(a => { %>
-      <li><strong><%= a.title %></strong> — status: <%= a.status %></li>
-    <% }) %>
-  <% } %>
-</ul>
-<%- include('partials/footer') %>
+
+  <div class="dashboard-container">
+    <div class="branding">
+      <h2>🌍 Dashboard 🌍</h2>
+      <p>Welcome back, <strong>
+          <%= session.firstName %>
+        </strong>!</p>
+    </div>
+
+    <div class="stats-box">
+      <p>You have <span>
+          <%= total %>
+        </span> assigned challenge<%= total===1 ? '' : 's' %>.</p>
+      <a href="/challenges" class="btn">➕ Add a New Challenge</a>
+    </div>
+
+    <h3>Your Challenges</h3>
+    <ul class="challenge-list">
+      <% if (!assignments.length) { %>
+        <li><em>No challenges yet.</em></li>
+        <% } else { %>
+          <% assignments.forEach(a=> { %>
+            <li>
+              <strong>
+                <%= a.title %>
+              </strong>
+              <span class="status <%= a.status.replace(' ', '-') %>">
+                <%= a.status %>
+              </span>
+            </li>
+            <% }) %>
+              <% } %>
+    </ul>
+  </div>
+
+  <%- include('partials/footer') %>

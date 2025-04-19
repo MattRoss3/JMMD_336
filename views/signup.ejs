@@ -1,13 +1,38 @@
 <%- include('partials/header', { title:'Sign Up' }) %>
-<h1>Sign Up</h1>
-<form method="POST" action="/signup">
-  <label>First Name: <input name="fname" required></label><br>
-  <label>Last Name:  <input name="lname" required></label><br>
-  <label>Username:   <input name="username" required></label><br>
-  <label>Password:   <input type="password" name="password" required></label><br>
-  <label>Confirm:    <input type="password" name="repassword" required></label><br>
-  <button type="submit">Register</button>
-</form>
-<% if (message) { %><p style="color:red;"><%= message %></p><% } %>
-<p>Or <a href="/login">Log In</a></p>
-<%- include('partials/footer') %>
+  <div class="signup-container">
+    <div class="branding">
+      <h2>🌍 Language Learning Application 🌍</h2>
+      <p>Learn languages. Level up.</p>
+    </div>
+
+    <h1>Sign Up</h1>
+    <form method="POST" action="/signup">
+      <label>First Name: <input name="fname" required></label><br>
+      <label>Last Name: <input name="lname" required></label><br>
+      <label>Username: <input name="username" required></label><br>
+      <label>Password: <input type="password" name="password" required></label><br>
+      <label>Confirm: <input type="password" name="repassword" required></label><br>
+      <button type="submit">Register</button>
+    </form>
+    <% if (message) { %>
+      <p style="color:red;">
+        <%= message %>
+      </p>
+      <% } %>
+        <p>Or <a href="/login">Log In</a></p>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+        <script>
+          anime({
+            targets: 'form',
+            scale: [0.8, 1],
+            opacity: [0, 1],
+            easing: 'spring(1, 80, 10, 0)',
+            duration: 1200,
+            delay: 100
+          });
+        </script>
+
+
+  </div>
+  <%- include('partials/footer') %>

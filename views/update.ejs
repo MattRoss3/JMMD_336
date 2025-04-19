@@ -1,25 +1,44 @@
 <%- include('partials/header', { title:'Update Profile' }) %>
-<h1>Update Profile</h1>
-<form action="/update" method="POST">
-  First Name:
-  <input type="text" name="fname" value="<%= info[1] %>"><br>
-  Last Name:
-  <input type="text" name="lname" value="<%= info[2] %>"><br>
-  Username:
-  <input type="text" name="username" value="<%= info[0] %>"><br>
-  <button type="submit">Update Info</button>
-</form>
-<hr>
-<form action="/updatepassword" method="POST">
-  Current Password:
-  <input type="password" name="password"><br>
-  New Password:
-  <input type="password" name="newpassword"><br>
-  Verify New Password:
-  <input type="password" name="repassword"><br>
-  <button type="submit">Change Password</button>
-</form>
-<% if (typeof message !== 'undefined') { %>
-  <h3><%= message %></h3>
-<% } %>
-<%- include('partials/footer') %>
+
+  <div class="update-container">
+    <div class="branding">
+      <h2>👤 Update Your Profile</h2>
+      <p>Keep your info current and your password secure!</p>
+    </div>
+
+    <form action="/update" method="POST">
+      <label>First Name:
+        <input type="text" name="fname" value="<%= info[1] %>">
+      </label>
+      <label>Last Name:
+        <input type="text" name="lname" value="<%= info[2] %>">
+      </label>
+      <label>Username:
+        <input type="text" name="username" value="<%= info[0] %>">
+      </label>
+      <button type="submit">Update Info</button>
+    </form>
+
+    <hr>
+
+    <form action="/updatepassword" method="POST">
+      <label>Current Password:
+        <input type="password" name="password">
+      </label>
+      <label>New Password:
+        <input type="password" name="newpassword">
+      </label>
+      <label>Verify New Password:
+        <input type="password" name="repassword">
+      </label>
+      <button type="submit">Change Password</button>
+    </form>
+
+    <% if (typeof message !=='undefined' ) { %>
+      <p class="form-message">
+        <%= message %>
+      </p>
+      <% } %>
+  </div>
+
+  <%- include('partials/footer') %>
