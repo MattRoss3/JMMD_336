@@ -4,7 +4,6 @@ import {
   postGenerate,
   displayFormatChoice,
   getWriteInQuestions,
-  promptQuestion,
   checkAnswer
 } from '../controllers/challengeController.mjs';
 import authenticated from '../middleware/authenticated.mjs';

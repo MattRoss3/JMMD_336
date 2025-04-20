@@ -2,22 +2,20 @@
 
 <div class="writein-challenge-container">
 
-
-
     <div class="branding">
-        <h2> <%= selectedChallenge.name %> </h2><br>
-        <h3> <%= selectedChallenge.description %> </h3>
+        <h2> <%= selectedChallenge[0].name %> </h2><br>
+        <h3> <%= selectedChallenge[0].description %> </h3>
+
     </div>
 
     <div>
         <%=attemptCounter%>.
         <%=questionList[questionIndex].questionText%><br>
-
-        <form action="/checkAnswer" method="POST">
+        <form action="/challenges/checkAnswer?questionId=<%=currQuestion.questionId%>" method="POST">
 
             <input type="text" name="userAnswer"><br>
 
-            <input type="submit" value="submit">
+            <input type="submit" value="Submit">
         </form>
     </div>
 
