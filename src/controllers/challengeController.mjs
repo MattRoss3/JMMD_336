@@ -29,6 +29,102 @@ export async function postGenerate(req, res, next) {
   }
 }
 
+export async function displayFormatChoice(req, res) {
+  try {
+    let challengeId = req.query.challengeId;
+
+    let sql = `SELECT * FROM challenges WHERE challenges.challengeId = ?`;
+    const [selectedChallengeRows] = await pool.query(sql, [challengeId]);
+    console.log(selectedChallengeRows);
+
+    let sqlQuestions = `SELECT * FROM questions INNER JOIN challenges ON questions.challengeId = challenges.challengeId`;
+    const [questionRows] = await pool.query(sqlQuestions);
+    console.log(questionRows);
+
+    // req.session.challengeId = challengeId;
+    req.session.selectedChallenge = selectedChallengeRows;
+
+    req.session.questionIndex = 0;
+    req.session.attemptCounter = 1;
+
+    req.session.questionList = questionRows;
+
+    res.render('challengeFormat', { message: null, "selectedChallenge":selectedChallengeRows });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function getWriteInQuestions(req, res) {
+  try {
+
+    let selectedChallenge = req.session.selectedChallenge[0];
+
+    let questionIndex = req.session.questionIndex;
+    let attemptCounter = req.session.attemptCounter;
+
+    let questionList = req.session.questionList;
+    // let challengeId = req.query.challengeId;
+
+    // req.session.challengeId = req.query.challengeId;
+    // let challengeId = req.session.challengeId;
+
+    // req.session.questionIndex = 0;
+    // let questionIndex = req.session.questionIndex;
+    //
+    // req.session.attemptCounter = 1;
+    // let attemptCounter = req.session.attemptCounter;
+
+    // let sqlChallenge = `SELECT * FROM challenges WHERE challenges.challengeId = ?`;
+    // const [selectedChallengeRows] = await pool.query(sqlChallenge, [challengeId]);
+    // console.log(selectedChallengeRows);
+    //
+    // let sqlQuestions = `SELECT * FROM questions INNER JOIN challenges ON questions.challengeId = challenges.challengeId`;
+    // const [questionRows] = await pool.query(sqlQuestions);
+    // console.log(questionRows);
+
+    res.render('writeInChallenge', { message: null, selectedChallenge, questionIndex, attemptCounter, questionList });
+
+    // res.render('writeInChallenge', { message: null, "selectedChallenge":selectedChallengeRows, "questionList":questionRows, questionIndex, attemptCounter });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function promptQuestion(req, res) {
+  try {
+    // let challengeId = req.session.challengeId;
+    let questionList = req.session.questionList;
+    let questionIndex = req.session.questionIndex;
+    let attemptCounter = req.session.attemptCounter;
+
+    let selectedChallenge = req.session.selectedChallenge;
+
+    res.render('writeInChallenge', { message: null, "selectedChallenge":selectedChallenge, "questionList":questionList, "questionIndex":questionIndex, "attemptCounter":attemptCounter });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function checkAnswer(req, res) {
+  try {
+    let userAnswer = req.body.userAnswer;
+    let correctAnswer = "";
+    // let questionId = req.params.questionId;
+    let index = req.session.currIndex;
+
+    // get correct answer
+    let sql = `SELECT * FROM answers WHERE answers.questionId = ? AND isCorrect = 1`;
+    const [answerRows] = await pool.query(sql, [questionId]);
+    console.log(answerRows);
+
+    res.redirect('/challenges/prompt');
+    // res.render('writeInChallenge', { message: null, "selectedChallenge":selectedChallengeRows, "questionList":questionRows });
+  } catch (err) {
+    next(err);
+  }
+}
+
 export async function getDashboard(req, res, next) {
   try {
     const userId = req.session.userId;
@@ -50,8 +146,6 @@ export async function getDashboard(req, res, next) {
        WHERE uc.userId = ?`,
       [userId]
     );
-
-
 
     res.render('dashboard', { total, assignments });
   } catch (err) {
