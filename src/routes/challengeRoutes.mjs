@@ -16,9 +16,8 @@ router.post('/generate',postGenerate);
 router.get('/format_prompt', displayFormatChoice);
 
 router.get('/writein', getWriteInQuestions);
-// router.get('/writein', promptQuestion);
 // router.get('/multiplechoice', displayMultipleChoiceQuestion);
-//
+
 router.post('/checkAnswer', checkAnswer);
 
 export default router;
