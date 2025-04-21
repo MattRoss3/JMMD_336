@@ -324,6 +324,17 @@ p a:hover {
     transition: background-color 0.3s ease;
 }
 
+.challenge-results {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.8s ease;
+    text-align: center;
+}
+
 .translator-container {
     max-width: 500px;
     margin: 2rem auto;
