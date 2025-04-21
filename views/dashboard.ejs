@@ -23,7 +23,7 @@
           <% assignments.forEach(a=> { %>
             <li>
               <strong>
-                <a href="/challenges/format_prompt?challengeId=<%=a.challengeId%>"><%= a.title %></a>
+                <a href="/challenges/format_prompt?challengeId=<%=a.challengeId%>" class="btn"><%= a.title %></a>
               </strong>
               <span class="status <%= a.status.replace(' ', '-') %>">
                 <%= a.status %>

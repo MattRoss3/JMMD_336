@@ -6,8 +6,9 @@
         <h3> <%= selectedChallenge[0].description %> </h3>
     </div>
 
-    <div>
-        <p> Choose the format for your challenge </p>
+    <p class="format-prompt"> Choose the format for your challenge </p>
+
+    <div class="format-choice">
         <a href="/challenges/multiplechoice?challengeId=<%=selectedChallenge[0].challengeId%>" class="btn"> Multiple Choice Challenge </a>
         <a href="/challenges/writein?challengeId=<%=selectedChallenge[0].challengeId%>" class="btn"> Write-in Challenge </a>
     </div>
