@@ -49,6 +49,7 @@ export async function displayFormatChoice(req, res, next) {
     req.session.incorrectCounter = 0;
     req.session.selectedChallenge = selectedChallengeRows;
     req.session.questionList = questionRows;
+    req.session.questionCount = questionRows.length;
 
     let questionIndex = req.session.questionIndex;
     let attemptCounter = req.session.attemptCounter;
@@ -82,7 +83,7 @@ export async function displayFormatChoice(req, res, next) {
 
 export async function getWriteInQuestions(req, res, next) {
   try {
-    let challengeId = req.query.challengeId;
+    // let challengeId = req.query.challengeId;
 
     // let sqlChallenge = `SELECT * FROM challenges WHERE challenges.challengeId = ?`;
     // const [selectedChallengeRows] = await pool.query(sqlChallenge, [challengeId]);
@@ -99,7 +100,7 @@ export async function getWriteInQuestions(req, res, next) {
     let selectedChallenge = req.session.selectedChallenge;
     let questionList = req.session.questionList;
 
-    let currQuestion = questionList[req.session.questionIndex];
+    let currQuestion = questionList[questionIndex];
 
     // res.render('writeInChallenge', { message: null, selectedChallenge, questionIndex, attemptCounter, questionList });
 
@@ -122,7 +123,7 @@ export async function checkAnswer(req, res, next) {
     let questionList = req.session.questionList;
 
 
-    let currQuestion = questionList[req.session.questionIndex];
+    let currQuestion = questionList[questionIndex];
     let challengeId = currQuestion.challengeId;
 
 
@@ -148,14 +149,43 @@ export async function checkAnswer(req, res, next) {
       const [progressRows] = await pool.query(sqlProgress, ["in progress", req.session.correctCounter, req.session.userId, challengeId]);
       console.log(progressRows);
 
+      let correctCounter = req.session.correctCounter;
+      let incorrectCounter = req.session.incorrectCounter;
+      let questionCount = req.session.questionCount;
+
+      if (attemptCounter > req.session.questionCount) {
+        // update user progress
+        let sqlProgress = `UPDATE progress SET status = ?, level = ? WHERE userId = ? AND challengeId = ?`;
+        const [progressRows] = await pool.query(sqlProgress, ["completed", req.session.correctCounter, req.session.userId, challengeId]);
+        console.log(progressRows);
+
+        res.render('challengeResults', { message: "CONGRATS!", correctCounter, incorrectCounter, questionCount });
+
+      }
+
       res.render('writeInChallenge', { message: "CORRECT!", "selectedChallenge":selectedChallenge, "questionList":questionList, "currQuestion":currQuestion, "questionIndex":questionIndex, "attemptCounter":attemptCounter });
 
     } else {
       req.session.incorrectCounter += 1;
 
+      let correctCounter = req.session.correctCounter;
+      let incorrectCounter = req.session.incorrectCounter;
+      let questionCount = req.session.questionCount;
+
+      if (attemptCounter > req.session.questionCount) {
+        // update user progress
+        let sqlProgress = `UPDATE progress SET status = ?, level = ? WHERE userId = ? AND challengeId = ?`;
+        const [progressRows] = await pool.query(sqlProgress, ["completed", req.session.correctCounter, req.session.userId, challengeId]);
+        console.log(progressRows);
+
+        res.render('challengeResults', { message: "You failed!", correctCounter, incorrectCounter, questionCount });
+
+      }
+
       res.render('writeInChallenge', { message: "INCORRECT!", "selectedChallenge":selectedChallenge, "questionList":questionList, "currQuestion":currQuestion, "questionIndex":questionIndex, "attemptCounter":attemptCounter });
 
     }
+
 
   } catch (err) {
     next(err);

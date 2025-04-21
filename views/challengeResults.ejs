@@ -1,0 +1,24 @@
+<%- include('partials/header', { title:'Challenge Results' }) %>
+
+<div class="challenge-results-container">
+
+    <div class="branding">
+        <h3> You have completed this challenge </h3>
+
+    </div>
+
+    <div>
+        You got <%=correctCounter%> questions out of <%=questionCount%> questions correct.<br>
+        You got <%=incorrectCounter%> questions out of <%=questionCount%> questions incorrect.<br>
+    </div>
+
+    <% if (message) { %>
+        <p class="form-message">
+            <%= message %>
+        </p>
+    <% } %>
+
+    <p><a href="/dashboard">← Back to Dashboard</a></p>
+</div>
+
+<%- include('partials/footer') %>

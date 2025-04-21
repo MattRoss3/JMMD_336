@@ -10,7 +10,7 @@
 
     <div>
         <%=attemptCounter%>.
-        <%=questionList[questionIndex].questionText%><br>
+        <%=currQuestion.questionText%><br>
         <form action="/challenges/checkAnswer?questionId=<%=currQuestion.questionId%>" method="POST">
 
             <input type="text" name="userAnswer"><br>
