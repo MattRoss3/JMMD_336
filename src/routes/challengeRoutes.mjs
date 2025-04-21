@@ -4,6 +4,7 @@ import {
   postGenerate,
   displayFormatChoice,
   getWriteInQuestions,
+  getMultipleChoiceQuestions,
   checkAnswer
 } from '../controllers/challengeController.mjs';
 import authenticated from '../middleware/authenticated.mjs';
@@ -16,7 +17,7 @@ router.post('/generate',postGenerate);
 router.get('/format_prompt', displayFormatChoice);
 
 router.get('/writein', getWriteInQuestions);
-// router.get('/multiplechoice', displayMultipleChoiceQuestion);
+router.get('/multiplechoice', getMultipleChoiceQuestions);
 
 router.post('/checkAnswer', checkAnswer);
 
