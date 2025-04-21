@@ -298,6 +298,32 @@ p a:hover {
     background-color: #ff3b2e;
 }
 
+.challange-interaction-box {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.8s ease;
+    text-align: center;
+}
+
+.challenge-interaction-form {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.challenge-interaction-form .btn {
+    background-color: #ff6f61;
+    color: #fff;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
 .translator-container {
     max-width: 500px;
     margin: 2rem auto;
