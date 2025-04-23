@@ -1,0 +1,25 @@
+<%- include('partials/header', { title:'Challenge Format Prompt' }) %>
+
+<div class="challenge-format-container">
+    <div class="branding">
+        <h2> <%= selectedChallenge[0].name %> </h2><br>
+        <h3> <%= selectedChallenge[0].description %> </h3>
+    </div>
+
+    <p class="format-prompt"> Choose the format for your challenge </p>
+
+    <div class="format-choice">
+        <a href="/challenges/multiplechoice?challengeId=<%=selectedChallenge[0].challengeId%>" class="btn"> Multiple Choice Challenge </a>
+        <a href="/challenges/writein?challengeId=<%=selectedChallenge[0].challengeId%>" class="btn"> Write-in Challenge </a>
+    </div>
+
+    <% if (message) { %>
+        <p class="form-message">
+            <%= message %>
+        </p>
+    <% } %>
+
+    <p><a href="/dashboard">← Back to Dashboard</a></p>
+</div>
+
+<%- include('partials/footer') %>

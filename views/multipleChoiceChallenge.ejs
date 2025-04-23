@@ -1,0 +1,46 @@
+<%- include('partials/header', { title:'Multiple-choice Challenge' }) %>
+
+<div class="multiplechoice-challenge-container">
+
+    <div class="branding">
+        <h2> <%= selectedChallenge[0].name %> </h2><br>
+        <h3> <%= selectedChallenge[0].description %> </h3>
+
+    </div>
+
+    <div class="challange-interaction-box">
+        <%=attemptCounter%>.
+        <%=currQuestion.questionText%><br>
+
+        <div class="challenge-interaction-form">
+            <form action="/challenges/checkAnswer?questionId=<%=currQuestion.questionId%>" method="POST">
+
+                <input type="radio" id="answer<%=answerList[0].answerId%>" name="userAnswer" value="<%=answerList[0].answerText%>">
+                <label for="answer<%=answerList[0].answerId%>"><%=answerList[0].answerText%></label>
+
+                <input type="radio" id="answer<%=answerList[1].answerId%>" name="userAnswer" value="<%=answerList[1].answerText%>">
+                <label for="answer<%=answerList[1].answerId%>"><%=answerList[1].answerText%></label>
+
+                <input type="radio" id="answer<%=answerList[2].answerId%>" name="userAnswer" value="<%=answerList[2].answerText%>">
+                <label for="answer<%=answerList[2].answerId%>"><%=answerList[2].answerText%></label>
+
+                <input type="radio" id="answer<%=answerList[3].answerId%>" name="userAnswer" value="<%=answerList[3].answerText%>">
+                <label for="answer<%=answerList[3].answerId%>"><%=answerList[3].answerText%></label>
+
+                <input class="btn" type="submit" value="Submit">
+            </form>
+        </div>
+
+
+    </div>
+
+    <% if (message) { %>
+        <p class="form-message">
+            <%= message %>
+        </p>
+    <% } %>
+
+    <p><a href="/dashboard">← Back to Dashboard</a></p>
+</div>
+
+<%- include('partials/footer') %>
